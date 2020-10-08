@@ -1,0 +1,16 @@
+{
+  "name": "depressionapp",
+  "version": "1.0.0",
+  "description": "An app that tracks mental health progress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pasha Fateev",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.8"
+  }
+}
