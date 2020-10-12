@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Depression app</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="stylesheets/main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1 class="display-4">Depression tracker</h1>
+        <p class="lead">
+          A simple app to give you statistical insight into your depression.
+        </p>
+        <hr class="my-4" />
+        <p>This tool is based on the Burn's Depression Checklist.</p>
+        <p class="lead">
+          <a class="btn btn-primary btn-lg" href="#" role="button"
+            >Learn more</a
+          >
+        </p>
+      </div>
+
+      <form>
+        <div class="form-inline">
+          <label for="q1" class="col-sm-2"
+            >Feeling sad or down in the dumps</label
+          >
+          <div class="form-check col-sm-1.25">
+            <input type="radio" name= "group1" id="q1-0" value="0">
+            <label for="q1-0">0 Not At All</label>
+          </div>
+          <div class="form-check col-sm-1.25">
+            <input type="radio" name= "group1" id="q1-1" value="1">
+            <label for="q1-1">1 Somewhat</label>
+          </div>
+          <div class="form-check col-sm-1.25">
+            <input type="radio" name= "group1" id="q1-2" value="2">
+            <label for="q1-2">2 Moderately </label>
+          </div>
+          <div class="form-check col-sm-1.25">
+            <input type="radio" name= "group1" id="q1-3" value="3">
+            <label for="q1-3">3 A Lot</label>
+          </div>
+          <div class="form-check col-sm-1.25">
+            <input type="radio" name= "group1" id="q1-4" value="4">
+            <label for="q1-4">4 Extremely</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
