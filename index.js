@@ -12,9 +12,13 @@ app.get('/', (req, res) => {
   res.render("index");
 });
 
+app.get('/checklist', (req, res) => {
+  res.render('checklist');
+});
+
 app.post('/checklist', (req, res) => {
   console.log(req.body);
-  res.render('checklist');
+  res.send("Hello");
 });
 
 // app.get('/r/:name/:id', (req, res) => {
