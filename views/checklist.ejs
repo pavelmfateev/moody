@@ -1,13 +1,15 @@
 <%- include('partials/header') %>
-<div class="container">
+<div class="container w-50 checklist">
+  <% for(let i = 0; i < question.length; i++){ %>
+  <p><%= question[i] %></p>
   <form action="/checklist" method="POST">
-    <div class="container">
+    <div class="form-group">
       <div class="form-check form-check-inline">
         <input
           class="form-check-input"
           type="radio"
-          id="q1_0"
-          name="q1"
+          id="q<%=i%>_0"
+          name="<%=i%>"
           value="0"
         />
         <label class="form-check-label" for="q1_0">0</label>
@@ -16,8 +18,8 @@
         <input
           class="form-check-input"
           type="radio"
-          id="q1_1"
-          name="q1"
+          id="<%=i%>_1"
+          name="<%=i%>"
           value="1"
         />
         <label class="form-check-label" for="q1_1">1</label>
@@ -26,8 +28,8 @@
         <input
           class="form-check-input"
           type="radio"
-          id="q1_2"
-          name="q1"
+          id="<%=i%>_2"
+          name="<%=i%>"
           value="2"
         />
         <label class="form-check-label" for="q1_2">2</label>
@@ -36,8 +38,8 @@
         <input
           class="form-check-input"
           type="radio"
-          id="q1_3"
-          name="q1"
+          id="<%=i%>_3"
+          name="<%=i%>"
           value="3"
         />
         <label class="form-check-label" for="q1_3">3</label>
@@ -46,66 +48,14 @@
         <input
           class="form-check-input"
           type="radio"
-          id="q1_4"
-          name="q1"
+          id="<%=i%>_4"
+          name="<%=i%>"
           value="4"
         />
         <label class="form-check-label" for="q1_4">4</label>
       </div>
     </div>
-    <div class="container">
-      <div class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="q2_0"
-          name="q2"
-          value="0"
-        />
-        <label class="form-check-label" for="q2_0">0</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="q2_1"
-          name="q2"
-          value="1"
-        />
-        <label class="form-check-label" for="q2_1">1</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="q2_2"
-          name="q2"
-          value="2"
-        />
-        <label class="form-check-label" for="q2_2">2</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="q2_3"
-          name="q2"
-          value="3"
-        />
-        <label class="form-check-label" for="q2_3">3</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="q2_4"
-          name="q2"
-          value="4"
-        />
-        <label class="form-check-label" for="q2_4">4</label>
-      </div>
-    </div>
-
+  <%}%>
     <button class="btn btn-primary" type="submit">Submit form</button>
   </form>
 </div>

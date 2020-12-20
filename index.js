@@ -13,7 +13,14 @@ app.get('/', (req, res) => {
 });
 
 app.get('/checklist', (req, res) => {
-  res.render('checklist');
+  const questions = [
+    "Feeling'sad'or'down'in'the'dumps",
+    "Feeling'unhappy'or'blue",
+    "Crying'spells'or'tearfulness",
+    "Feeling'discouraged"
+  ]
+
+  res.render('checklist', {question : questions});
 });
 
 app.post('/checklist', (req, res) => {
