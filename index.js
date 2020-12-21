@@ -14,10 +14,10 @@ app.get('/', (req, res) => {
 
 app.get('/checklist', (req, res) => {
   const questions = [
-    "Feeling'sad'or'down'in'the'dumps",
-    "Feeling'unhappy'or'blue",
-    "Crying'spells'or'tearfulness",
-    "Feeling'discouraged"
+    "Feeling sad or down in the dumps",
+    "Feeling unhappy or blue",
+    "Crying spells or tearfulness",
+    "Feeling discouraged"
   ]
 
   res.render('checklist', {question : questions});
