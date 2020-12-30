@@ -3,11 +3,17 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const path = require("path");
+const methodOverride = require('method-override');
 const { v4: uuid } = require("uuid");
 
 app.use(express.static(path.join(__dirname, "public")));
+//To parse form data in POST request body:
 app.use(express.urlencoded({ extended: true }));
+// To parse incoming JSON in POST request body:
 app.use(express.json());
+// To 'fake' put/patch/delete requests:
+app.use(methodOverride('_method'));
+// Views folder and EJS setup:
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 
@@ -18,7 +24,6 @@ let questions = [
   "Crying spells or tearfulness",
   "Feeling discouraged",
 ];
-// let dateGen = new Date().toDateString();
 
 const dateGen = () => {
   return new Date().toDateString();
@@ -113,8 +118,24 @@ app.post("/checklists", (req, res) => {
 app.get("/checklists/:id/edit", (req, res) => {
   const { id } = req.params;
   const checklist = checklists.find((c) => c.id === id);
-  res.render("checklists/edit", { checklist });
+  let key = 'q';
+  res.render("checklists/edit", { checklist, questions, key });
 });
+
+// *******************************************
+// UPDATE - updates a particular checklist
+// *******************************************
+app.patch('/checklists/:id', (req, res) => {
+  const { id } = req.params;
+  const foundChecklist = checklists.find(c => c.id === id);
+
+  //get new text from req.body
+  const newCommentText = req.body.comment;
+  //update the comment with the data from req.body:
+  foundChecklist.comment = newCommentText;
+  //redirect back to index (or wherever you want)
+  res.redirect('/checklists');
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
