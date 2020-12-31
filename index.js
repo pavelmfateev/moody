@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const path = require("path");
-const methodOverride = require('method-override');
+const methodOverride = require("method-override");
 const { v4: uuid } = require("uuid");
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 // To parse incoming JSON in POST request body:
 app.use(express.json());
 // To 'fake' put/patch/delete requests:
-app.use(methodOverride('_method'));
+app.use(methodOverride("_method"));
 // Views folder and EJS setup:
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
@@ -89,22 +89,10 @@ app.get("/checklists/new", (req, res) => {
 app.post("/checklists", (req, res) => {
   const { q1, q2, q3, q4, comment } = req.body;
   let stringsToNum = [q1, q2, q3, q4];
-  let total = 0;
-  for (let i = 0; i < stringsToNum.length; i++) {
-    stringsToNum[i] = parseInt(stringsToNum[i]);
-    total += stringsToNum[i];
-  }
-  let checklist = {};
 
-  for (let i = 1; i <= stringsToNum.length; i++) {
-    let key = "q" + i;
-    checklist[key] = stringsToNum[i - 1];
-  }
-
-  (checklist.total = total),
-    (checklist.id = uuid()),
-    (checklist.date = dateGen()),
-    (checklist.comment = comment);
+  stringsToNum = stringConvert(stringsToNum);
+  total = numTotal(stringsToNum);
+  let checklist = checklistFill(stringsToNum, total, comment);
 
   console.log(checklist);
   checklists.push(checklist);
@@ -118,24 +106,74 @@ app.post("/checklists", (req, res) => {
 app.get("/checklists/:id/edit", (req, res) => {
   const { id } = req.params;
   const checklist = checklists.find((c) => c.id === id);
-  let key = 'q';
+  let key = "q";
   res.render("checklists/edit", { checklist, questions, key });
 });
 
 // *******************************************
 // UPDATE - updates a particular checklist
 // *******************************************
-app.patch('/checklists/:id', (req, res) => {
+app.patch("/checklists/:id", (req, res) => {
   const { id } = req.params;
-  const foundChecklist = checklists.find(c => c.id === id);
+  const foundChecklist = checklists.find((c) => c.id === id);
+  const { q1, q2, q3, q4, comment: newCommentText } = req.body;
+  let stringsToNum = [q1, q2, q3, q4];
+  stringsToNum = stringConvert(stringsToNum);
+  let total = numTotal(stringsToNum);
 
-  //get new text from req.body
-  const newCommentText = req.body.comment;
-  //update the comment with the data from req.body:
-  foundChecklist.comment = newCommentText;
-  //redirect back to index (or wherever you want)
+  //update the object with the new data from req.body:
+  (foundChecklist.total = total),
+    (foundChecklist.comment = newCommentText),
+    (foundChecklist.q1 = stringsToNum[0]),
+    (foundChecklist.q2 = stringsToNum[1]),
+    (foundChecklist.q3 = stringsToNum[2]),
+    (foundChecklist.q4 = stringsToNum[3]);
+
+  res.redirect("/checklists");
+});
+
+// *******************************************
+// DELETE/DESTROY- removes a single comment
+// *******************************************
+app.delete('/checklists/:id', (req, res) => {
+  const { id } = req.params;
+  checklists = checklists.filter(c => c.id !== id);
   res.redirect('/checklists');
 })
+
+// HELPER METHODS
+// converts json response values from string to numbers
+const stringConvert = (arr) => {
+  for (let i = 0; i < arr.length; i++) {
+    arr[i] = parseInt(arr[i]);
+  }
+  return arr;
+};
+// calculates the total from response
+const numTotal = (arr) => {
+  let total = 0;
+  for (let i = 0; i < arr.length; i++) {
+    arr[i] = parseInt(arr[i]);
+    total += arr[i];
+  }
+  return total;
+};
+// fills in checklist object
+const checklistFill = (arr, total, comment) => {
+  let checklist = {};
+
+  for (let i = 1; i <= arr.length; i++) {
+    let key = "q" + i;
+    checklist[key] = arr[i - 1];
+  }
+
+  (checklist.total = total),
+    (checklist.id = uuid()),
+    (checklist.date = dateGen()),
+    (checklist.comment = comment);
+
+  return checklist;
+};
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
