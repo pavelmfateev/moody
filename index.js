@@ -1,10 +1,10 @@
 // SETUP
-const express = require("express");
-const app = express();
-const port = 3000;
-const path = require("path");
-const methodOverride = require("method-override");
-const { v4: uuid } = require("uuid");
+const express = require("express"),
+  app = express(),
+  port = 3000,
+  path = require("path"),
+  methodOverride = require("method-override"),
+  { v4: uuid } = require("uuid");
 
 const mongoose = require("mongoose");
 mongoose
@@ -32,33 +32,6 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 
 // Temporary test data
-let questions = [
-  "Feeling sad or down in the dumps",
-  "Feeling unhappy or blue",
-  "Crying spells or tearfulness",
-  "Feeling discouraged",
-  "Feeling hopeless",
-  "Low self-esteem",
-  "Feeling worthless or inadequate",
-  "Guilt or shame",
-  "Criticizing yourself or blaming others",
-  "Difficulty making decisions",
-  "Loss of interest in family, friends or colleagues",
-  "Loneliness",
-  "Spending less time with family or friends",
-  "Loss of motivation",
-  "Loss of interest in work or other activities",
-  "Avoiding work or other activities",
-  "Loss of pleasure or satisfaction in life",
-  "Feeling tired",
-  "Difficulty sleeping or sleeping too much",
-  "Decreased or increased appetite",
-  "Loss of interest in sex",
-  "Worrying about your health",
-  "Do you have any suicidal thoughts?",
-  "Would you like to end your life?",
-  "Do you have a plan for harming yourself?",
-];
 
 const dateGen = () => {
   return new Date().toDateString();
@@ -102,150 +75,8 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-// **********************************
-// INDEX - renders multiple checklists
-// **********************************
-app.get("/checklists", (req, res) => {
-  // let total = 0;
-  // for(let i = 0; i < questions.length; i++){
-  //     console.log(checklists[i]);
-  // }
-  res.render("checklists/index", { checklists });
-});
-// **********************************
-// NEW - renders a form
-// **********************************
-app.get("/checklists/new", (req, res) => {
-  res.render("checklists/new", { questions });
-});
-// **********************************
-// CREATE - creates a new checklist
-// **********************************
-app.post("/checklists", (req, res) => {
-  const { q1, q2, q3, q4, comment } = req.body;
-  let stringsToNum = [q1, q2, q3, q4];
+const checklistsRoutes = require("./routes/checklists.js");
 
-  stringsToNum = stringConvert(stringsToNum);
-  total = numTotal(stringsToNum);
-  let checklist = checklistFill(stringsToNum, total, comment);
-
-  console.log(checklist);
-  checklists.push(checklist);
-
-  res.render("checklists/index", { checklists });
-});
-
-// *******************************************
-// EDIT - renders a form to edit a comment
-// *******************************************
-app.get("/checklists/:id/edit", (req, res) => {
-  const { id } = req.params;
-  const checklist = checklists.find((c) => c.id === id);
-  let key = "q";
-  res.render("checklists/edit", { checklist, questions, key });
-});
-
-// *******************************************
-// UPDATE - updates a particular checklist
-// *******************************************
-app.patch("/checklists/:id", (req, res) => {
-  const { id } = req.params;
-  const foundChecklist = checklists.find((c) => c.id === id);
-  const { q1, q2, q3, q4, comment: newCommentText } = req.body;
-  let stringsToNum = [q1, q2, q3, q4];
-  stringsToNum = stringConvert(stringsToNum);
-  let total = numTotal(stringsToNum);
-
-  //update the object with the new data from req.body:
-  (foundChecklist.total = total),
-    (foundChecklist.comment = newCommentText),
-    (foundChecklist.q1 = stringsToNum[0]),
-    (foundChecklist.q2 = stringsToNum[1]),
-    (foundChecklist.q3 = stringsToNum[2]),
-    (foundChecklist.q4 = stringsToNum[3]);
-
-  res.redirect("/checklists");
-});
-
-// *******************************************
-// DELETE/DESTROY- removes a single comment
-// *******************************************
-app.delete("/checklists/:id", (req, res) => {
-  const { id } = req.params;
-  checklists = checklists.filter((c) => c.id !== id);
-  res.redirect("/checklists");
-});
-
-// HELPER METHODS
-// converts json response values from string to numbers
-const stringConvert = (arr) => {
-  for (let i = 0; i < arr.length; i++) {
-    arr[i] = parseInt(arr[i]);
-  }
-  return arr;
-};
-// calculates the total from response
-const numTotal = (arr) => {
-  let total = 0;
-  for (let i = 0; i < arr.length; i++) {
-    arr[i] = parseInt(arr[i]);
-    total += arr[i];
-  }
-  return total;
-};
-// fills in checklist object
-const checklistFill = (arr, total, comment) => {
-  let checklist = {};
-
-  for (let i = 1; i <= arr.length; i++) {
-    let key = "q" + i;
-    checklist[key] = arr[i - 1];
-  }
-
-  (checklist.total = total),
-    (checklist.id = uuid()),
-    (checklist.date = dateGen()),
-    (checklist.comment = comment);
-
-  return checklist;
-};
-
-// MONGO SCHEMAS
-const checklistSchema = new mongoose.Schema({
-  answers: [
-    {
-      q1: Number,
-      q2: Number,
-      q3: Number,
-      q4: Number,
-      q5: Number,
-      q6: Number,
-      q7: Number,
-      q8: Number,
-      q9: Number,
-      q10: Number,
-      q11: Number,
-      q12: Number,
-      q14: Number,
-      q15: Number,
-      q16: Number,
-      q17: Number,
-      q18: Number,
-      q19: Number,
-      q20: Number,
-      q21: Number,
-      q22: Number,
-      q23: Number,
-      q24: Number,
-      q25: Number,
-    },
-  ],
-  total: Number,
-  dateAdded: String,
-  comment: String,
-});
-
-const Checklist = mongoose.model("Checklist", checklistSchema);
 // const firstTest = new Checklist({
 //   answers: [
 //     {
@@ -279,6 +110,8 @@ const Checklist = mongoose.model("Checklist", checklistSchema);
 //   dateAdded: dateGen(),
 //   comment: "Did this work?",
 // });
+
+app.use(checklistsRoutes);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
