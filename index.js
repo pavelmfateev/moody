@@ -4,7 +4,6 @@ const express = require("express"),
   port = 3000,
   path = require("path"),
   methodOverride = require("method-override"),
-  { v4: uuid } = require("uuid");
 
 const mongoose = require("mongoose");
 mongoose
@@ -30,45 +29,6 @@ app.use(methodOverride("_method"));
 // Views folder and EJS setup:
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
-
-// Temporary test data
-
-const dateGen = () => {
-  return new Date().toDateString();
-};
-
-let checklists = [
-  {
-    q1: 0,
-    q2: 1,
-    q3: 2,
-    q4: 3,
-    total: 6,
-    id: uuid(),
-    date: dateGen(),
-    comment: "This is my first entry",
-  },
-  {
-    q1: 2,
-    q2: 3,
-    q3: 1,
-    q4: 1,
-    total: 7,
-    id: uuid(),
-    date: dateGen(),
-    comment: "Testing",
-  },
-  {
-    q1: 0,
-    q2: 1,
-    q3: 1,
-    q4: 1,
-    total: 3,
-    id: uuid(),
-    date: dateGen(),
-    comment: "I am also testing",
-  },
-];
 
 // ROUTES
 app.get("/", (req, res) => {
