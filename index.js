@@ -77,40 +77,6 @@ app.get("/", (req, res) => {
 
 const checklistsRoutes = require("./routes/checklists.js");
 
-// const firstTest = new Checklist({
-//   answers: [
-//     {
-//       q1: 0,
-//       q2: 1,
-//       q3: 2,
-//       q4: 3,
-//       q5: 0,
-//       q6: 1,
-//       q7: 2,
-//       q8: 3,
-//       q9: 2,
-//       q10: 3,
-//       q11: 1,
-//       q12: 1,
-//       q14: 0,
-//       q15: 0,
-//       q16: 0,
-//       q17: 1,
-//       q18: 2,
-//       q19: 3,
-//       q20: 3,
-//       q21: 2,
-//       q22: 1,
-//       q23: 0,
-//       q24: 1,
-//       q25: 0,
-//     },
-//   ],
-//   total: 25,
-//   dateAdded: dateGen(),
-//   comment: "Did this work?",
-// });
-
 app.use(checklistsRoutes);
 
 app.listen(port, () => {

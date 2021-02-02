@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Checklist = require("../models/checklist");
 
-// Temporary data (insert into database?)
+// Question data (insert into database?)
 let questions = [
   "Feeling sad or down in the dumps",
   "Feeling unhappy or blue",
