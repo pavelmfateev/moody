@@ -34,9 +34,8 @@ const checklistSchema = new mongoose.Schema({
         q25: Number,
       },
     ],
-    total: Number,
-    dateAdded: String,
     comment: String,
+    total: Number
   });
  
 module.exports = mongoose.model("Checklist", checklistSchema);

@@ -81,20 +81,7 @@ router.post("/checklists", (req, res) => {
     q25,
     comment,
   } = req.body;
-  // let stringsToNum = [q1, q2, q3, q4];
-
-  // stringsToNum = stringConvert(stringsToNum);
-  // total = numTotal(stringsToNum);
-  // let checklist = checklistFill(stringsToNum, total, comment);
-
-  // console.log(checklist);
-  // checklists.push(checklist);
-
-  // const checklist = {answers:[]};
-  // for(let i = 0; i < questions.length; i++){
-  //     let
-  // }
-
+  
   const newChecklist = {
     dateAdded: new Date,
     answers: {
@@ -124,8 +111,12 @@ router.post("/checklists", (req, res) => {
       q24,
       q25,
     },
-    comment
+    comment,
+    total: 0
   };
+
+newChecklist.total = numTotal(newChecklist.answers);
+
   Checklist.create(newChecklist)
     .then(() => {
       // res.render("checklists/index", { checklists });
@@ -187,11 +178,11 @@ const stringConvert = (arr) => {
   return arr;
 };
 // calculates the total from response
-const numTotal = (arr) => {
+const numTotal = (object) => {
   let total = 0;
-  for (let i = 0; i < arr.length; i++) {
-    arr[i] = parseInt(arr[i]);
-    total += arr[i];
+  for (const property in object) {
+    let numTemp = parseInt(object[property]);
+    total+= numTemp;
   }
   return total;
 };
