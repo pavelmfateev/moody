@@ -81,9 +81,9 @@ router.post("/checklists", (req, res) => {
     q25,
     comment,
   } = req.body;
-  
+
   const newChecklist = {
-    dateAdded: new Date,
+    dateAdded: new Date(),
     answers: {
       q1,
       q2,
@@ -112,15 +112,21 @@ router.post("/checklists", (req, res) => {
       q25,
     },
     comment,
-    total: 0
+    total: 0,
   };
 
-newChecklist.total = numTotal(newChecklist.answers);
+  newChecklist.total = numTotal(newChecklist.answers);
 
   Checklist.create(newChecklist)
     .then(() => {
-      // res.render("checklists/index", { checklists });
-      res.send("The POST route create operation was succesful");
+      Checklist.find({})
+        .then((data) => {
+          res.render("checklists/index", { checklists: data });
+        })
+        .catch(() => {
+          res.send("IT WAS A FLUKE");
+        });
+
       console.log(newChecklist);
     })
     .catch(() => {
@@ -182,7 +188,7 @@ const numTotal = (object) => {
   let total = 0;
   for (const property in object) {
     let numTemp = parseInt(object[property]);
-    total+= numTemp;
+    total += numTemp;
   }
   return total;
 };
