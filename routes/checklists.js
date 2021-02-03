@@ -120,8 +120,8 @@ router.post("/checklists", (req, res) => {
   Checklist.create(newChecklist)
     .then(() => {
       Checklist.find({})
-        .then((data) => {
-          res.render("checklists/index", { checklists: data });
+        .then(() => {
+          res.redirect("/checklists");
         })
         .catch(() => {
           res.send("IT WAS A FLUKE");
@@ -139,9 +139,15 @@ router.post("/checklists", (req, res) => {
 // *******************************************
 router.get("/checklists/:id/edit", (req, res) => {
   const { id } = req.params;
-  const checklist = checklists.find((c) => c.id === id);
-  let key = "q";
-  res.render("checklists/edit", { checklist, questions, key });
+  Checklist.findById(id)
+    .then(data => {
+      let key = "q";
+      res.render("checklists/edit", { checklist: data, questions, key });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send("IT WAS A FLUKE");
+    });
 });
 
 // *******************************************
@@ -192,6 +198,7 @@ const numTotal = (object) => {
   }
   return total;
 };
+
 // fills in checklist object
 const checklistFill = (arr, total, comment) => {
   let checklist = {};
