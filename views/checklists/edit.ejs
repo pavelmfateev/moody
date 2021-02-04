@@ -1,6 +1,6 @@
 <%- include('../partials/header') %>
 <body>
-  <div class="container">
+  <div class="container mb-5">
     <form action="/checklists/<%= checklist.id %>?_method=PATCH" method="POST">
       <table class="table">
         <thead class="thead-light">
@@ -67,6 +67,7 @@
       >
       <% } %>
       <button class="btn btn-lg btn-primary mt-4" type="submit">Submit</button>
+      <a class="btn btn-lg btn-secondary mt-4" href="/checklists">Go Back</a>
     </form>
   </div>
   <%- include('../partials/footer') %>

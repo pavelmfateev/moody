@@ -129,7 +129,8 @@ router.post("/checklists", (req, res) => {
 
       console.log(newChecklist);
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err._message);
       res.send("IT WAS A FLUKE");
     });
 });
@@ -155,19 +156,46 @@ router.get("/checklists/:id/edit", (req, res) => {
 // *******************************************
 router.patch("/checklists/:id", (req, res) => {
   const { id } = req.params;
-  const foundChecklist = checklists.find((c) => c.id === id);
-  const { q1, q2, q3, q4, comment: newCommentText } = req.body;
-  let stringsToNum = [q1, q2, q3, q4];
-  stringsToNum = stringConvert(stringsToNum);
-  let total = numTotal(stringsToNum);
-
-  //update the object with the new data from req.body:
-  (foundChecklist.total = total),
-    (foundChecklist.comment = newCommentText),
-    (foundChecklist.q1 = stringsToNum[0]),
-    (foundChecklist.q2 = stringsToNum[1]),
-    (foundChecklist.q3 = stringsToNum[2]),
-    (foundChecklist.q4 = stringsToNum[3]);
+  // const toUpdate = {
+  //   q1,
+  //   q2,
+  //   q3,
+  //   q4,
+  //   q5,
+  //   q6,
+  //   q7,
+  //   q8,
+  //   q9,
+  //   q10,
+  //   q11,
+  //   q12,
+  //   q13,
+  //   q14,
+  //   q15,
+  //   q16,
+  //   q17,
+  //   q18,
+  //   q19,
+  //   q20,
+  //   q21,
+  //   q22,
+  //   q23,
+  //   q24,
+  //   q25,
+  //   comment,
+  // } = req.body;
+  // Checklist.findById(id).then(async (data) => {
+  //   data = toUpdate;
+  //   await data.save().then(()=>{
+  //     res.redirect("/checklists");
+  //   }).catch((err) => {
+  //     console.log(err);
+  //     res.send("IT WAS A FLUKE");
+  //   }); 
+  // }).catch((err) => {
+  //   console.log(err);
+  //   res.send("IT WAS A FLUKE");
+  // });
 
   res.redirect("/checklists");
 });
