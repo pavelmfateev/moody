@@ -6,6 +6,7 @@ const express = require("express"),
   methodOverride = require("method-override");
 
 const mongoose = require("mongoose");
+mongoose.set("useFindAndModify", false);
 mongoose
   .connect("mongodb://localhost:27017/depressionApp", {
     useNewUrlParser: true,
@@ -37,7 +38,7 @@ app.get("/", (req, res) => {
 
 const checklistsRoutes = require("./routes/checklists.js");
 
-app.use(checklistsRoutes);
+app.use('/checklists', checklistsRoutes);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

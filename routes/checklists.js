@@ -34,7 +34,7 @@ let questions = [
 // **********************************
 // INDEX - renders multiple checklists
 // **********************************
-router.get("/checklists", (req, res) => {
+router.get("/", (req, res) => {
   Checklist.find({}, (err, checklists) => {
     if (err) {
       console.log(err);
@@ -46,13 +46,13 @@ router.get("/checklists", (req, res) => {
 // **********************************
 // NEW - renders a form
 // **********************************
-router.get("/checklists/new", (req, res) => {
+router.get("/new", (req, res) => {
   res.render("checklists/new", { questions });
 });
 // **********************************
 // CREATE - creates a new checklist
 // **********************************
-router.post("/checklists", (req, res) => {
+router.post("/", (req, res) => {
   const {
     q1,
     q2,
@@ -138,7 +138,7 @@ router.post("/checklists", (req, res) => {
 // *******************************************
 // EDIT - renders a form to edit a comment
 // *******************************************
-router.get("/checklists/:id/edit", (req, res) => {
+router.get("/:id/edit", (req, res) => {
   const { id } = req.params;
   Checklist.findById(id)
     .then(data => {
@@ -154,69 +154,22 @@ router.get("/checklists/:id/edit", (req, res) => {
 // *******************************************
 // UPDATE - updates a particular checklist
 // *******************************************
-router.patch("/checklists/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  // const toUpdate = {
-  //   q1,
-  //   q2,
-  //   q3,
-  //   q4,
-  //   q5,
-  //   q6,
-  //   q7,
-  //   q8,
-  //   q9,
-  //   q10,
-  //   q11,
-  //   q12,
-  //   q13,
-  //   q14,
-  //   q15,
-  //   q16,
-  //   q17,
-  //   q18,
-  //   q19,
-  //   q20,
-  //   q21,
-  //   q22,
-  //   q23,
-  //   q24,
-  //   q25,
-  //   comment,
-  // } = req.body;
-  // Checklist.findById(id).then(async (data) => {
-  //   data = toUpdate;
-  //   await data.save().then(()=>{
-  //     res.redirect("/checklists");
-  //   }).catch((err) => {
-  //     console.log(err);
-  //     res.send("IT WAS A FLUKE");
-  //   }); 
-  // }).catch((err) => {
-  //   console.log(err);
-  //   res.send("IT WAS A FLUKE");
-  // });
-
+  await Checklist.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
   res.redirect("/checklists");
 });
 
 // *******************************************
 // DELETE/DESTROY- removes a single comment
 // *******************************************
-router.delete("/checklists/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
   const { id } = req.params;
   checklists = checklists.filter((c) => c.id !== id);
   res.redirect("/checklists");
 });
 
 // HELPER METHODS
-// converts json response values from string to numbers
-const stringConvert = (arr) => {
-  for (let i = 0; i < arr.length; i++) {
-    arr[i] = parseInt(arr[i]);
-  }
-  return arr;
-};
 // calculates the total from response
 const numTotal = (object) => {
   let total = 0;
@@ -225,23 +178,6 @@ const numTotal = (object) => {
     total += numTemp;
   }
   return total;
-};
-
-// fills in checklist object
-const checklistFill = (arr, total, comment) => {
-  let checklist = {};
-
-  for (let i = 1; i <= arr.length; i++) {
-    let key = "q" + i;
-    checklist[key] = arr[i - 1];
-  }
-
-  (checklist.total = total),
-    (checklist.id = uuid()),
-    (checklist.date = dateGen()),
-    (checklist.comment = comment);
-
-  return checklist;
 };
 
 module.exports = router;
