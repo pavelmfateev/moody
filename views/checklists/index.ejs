@@ -1,7 +1,7 @@
 <%- include('../partials/header') %>
 <body>
   <div class="container mt-3">
-    <a class="btn btn-lg btn-primary mb-1" href="checklists/new" role="button"
+    <a class="btn btn-lg btn-primary mb-1" href="/checklists/new" role="button"
       >Add new</a
     >
     <h1>Previous entries</h1>
@@ -26,13 +26,13 @@
             <div class="btn-group" role="group">
               <a
                 class="btn btn-success btn-sm"
-                href="checklists/<%= checklists[i - 1]._id%>/edit"
+                href="/checklists/<%= checklists[i - 1]._id%>/edit"
                 role="button"
                 >Edit</a
               >
               <form
                 method="POST"
-                action="checklists/<%= checklists[i - 1]._id%>?_method=DELETE"
+                action="/checklists/<%= checklists[i - 1]._id%>?_method=DELETE"
                 class="form-inline"
               >
                 <button type="submit" class="btn btn-danger btn-sm">

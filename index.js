@@ -3,7 +3,8 @@ const express = require("express"),
   app = express(),
   port = 3000,
   path = require("path"),
-  methodOverride = require("method-override");
+  methodOverride = require("method-override"),
+  checklistsRoutes = require("./routes/checklists.js");
 
 const mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
@@ -31,14 +32,14 @@ app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 
+
+
+app.use('/checklists', checklistsRoutes);
+
 // ROUTES
 app.get("/", (req, res) => {
   res.render("index");
 });
-
-const checklistsRoutes = require("./routes/checklists.js");
-
-app.use('/checklists', checklistsRoutes);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

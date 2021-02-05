@@ -5,7 +5,7 @@ const checklistSchema = new mongoose.Schema({
       type: Date,
       default: Date.now
     },
-    answers: [
+    answers: 
       {
         _id: false,
         q2: {type: Number, required: true},
@@ -33,7 +33,7 @@ const checklistSchema = new mongoose.Schema({
         q24: {type: Number, required: true},
         q25: {type: Number, required: true} 
       }
-    ],
+    ,
     comment: {type: String, maxLength: 500},
     total: Number
   });

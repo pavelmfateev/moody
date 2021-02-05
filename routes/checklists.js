@@ -141,7 +141,7 @@ router.post("/", (req, res) => {
 router.get("/:id/edit", (req, res) => {
   const { id } = req.params;
   Checklist.findById(id)
-    .then(data => {
+    .then((data) => {
       let key = "q";
       res.render("checklists/edit", { checklist: data, questions, key });
     })
@@ -156,7 +156,17 @@ router.get("/:id/edit", (req, res) => {
 // *******************************************
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  await Checklist.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
+  const answersFormatted = answers(req.body);
+
+  const updateObj = {
+    answers: answersFormatted.answers,
+    comment: req.body.comment,
+  };
+  const checklist = await Checklist.findByIdAndUpdate(id, updateObj, {
+    runValidators: true,
+    new: true,
+  });
+  
   res.redirect("/checklists");
 });
 
@@ -178,6 +188,17 @@ const numTotal = (object) => {
     total += numTemp;
   }
   return total;
+};
+
+// fills object with answers from req.body
+const answers = (objIn) => {
+  objOut = { answers: {} };
+  for (const property in objIn) {
+    if (property != "comment") {
+      objOut.answers[property] = objIn[property];
+    }
+  }
+  return objOut;
 };
 
 module.exports = router;
