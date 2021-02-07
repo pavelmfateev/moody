@@ -1,80 +1,85 @@
-<%- include('../partials/header') %>
-<body>
-    <div class="container">
-        <form action="/checklists" method="POST">
-          <table class="table">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Questions</th>
-                <th scope="col">Responses</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% for(let i = 1; i <= questions.length; i++){ %>
-              <tr>
-                <th scope="row"><%=i%></th>
-                <td><%= questions[i-1] %></td>
-                <td>
-                  <div class="form-group">
-                    <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        id="q<%=i%>_0"
-                        name="q<%=i%>"
-                        value="0"
-                      />
-                      <label class="form-check-label" for="q1_0">0</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        id="<%=i%>_1"
-                        name="q<%=i%>"
-                        value="1"
-                      />
-                      <label class="form-check-label" for="q<%=i%>_1">1</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        id="<%=i%>_2"
-                        name="q<%=i%>"
-                        value="2"
-                      />
-                      <label class="form-check-label" for="q<%=i%>_2">2</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        id="<%=i%>_3"
-                        name="q<%=i%>"
-                        value="3"
-                      />
-                      <label class="form-check-label" for="q<%=i%>_3">3</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        id="<%=i%>_4"
-                        name="q<%=i%>"
-                        value="4"
-                      />
-                      <label class="form-check-label" for="q<%=i%>_4">4</label>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <% } %>
-            </tbody>
-          </table>
-          <textarea class="form-control" id="comment" rows="3" name="comment" placeholder="Add a comment"></textarea>
-          <button class="btn btn-lg btn-primary mt-4" type="submit">Submit</button>
-        </form>
-      </div>
-<%- include('../partials/footer') %>
+<% layout('layouts/boilerplate')%>
+
+<div class="container">
+  <form action="/checklists" method="POST">
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Questions</th>
+          <th scope="col">Responses</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let i = 1; i <= questions.length; i++){ %>
+        <tr>
+          <th scope="row"><%=i%></th>
+          <td><%= questions[i-1] %></td>
+          <td>
+            <div class="form-group">
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="q<%=i%>_0"
+                  name="q<%=i%>"
+                  value="0"
+                />
+                <label class="form-check-label" for="q1_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="<%=i%>_1"
+                  name="q<%=i%>"
+                  value="1"
+                />
+                <label class="form-check-label" for="q<%=i%>_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="<%=i%>_2"
+                  name="q<%=i%>"
+                  value="2"
+                />
+                <label class="form-check-label" for="q<%=i%>_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="<%=i%>_3"
+                  name="q<%=i%>"
+                  value="3"
+                />
+                <label class="form-check-label" for="q<%=i%>_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="<%=i%>_4"
+                  name="q<%=i%>"
+                  value="4"
+                />
+                <label class="form-check-label" for="q<%=i%>_4">4</label>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+    <textarea
+      class="form-control"
+      id="comment"
+      rows="3"
+      name="comment"
+      placeholder="Add a comment"
+    ></textarea>
+    <button class="btn btn-lg btn-primary mt-4" type="submit">Submit</button>
+  </form>
+</div>

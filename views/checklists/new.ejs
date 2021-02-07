@@ -1,5 +1,4 @@
-<%- include('../partials/header') %>
-<body>
+<% layout('layouts/boilerplate')%>
 <div class="container mb-5">
   <form action="/checklists" method="POST">
     <table class="table">
@@ -73,8 +72,13 @@
         <% } %>
       </tbody>
     </table>
-    <textarea class="form-control" id="comment" rows="3" name="comment" placeholder="Add a comment"></textarea>
+    <textarea
+      class="form-control"
+      id="comment"
+      rows="3"
+      name="comment"
+      placeholder="Add a comment"
+    ></textarea>
     <button class="btn btn-lg btn-primary mt-4" type="submit">Submit</button>
   </form>
 </div>
-<%- include('../partials/footer') %>
