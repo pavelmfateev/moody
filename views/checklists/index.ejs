@@ -19,7 +19,7 @@
         <% for(let i = 1; i <= checklists.length; i++) {%>
         <tr>
           <th scope="row"><%= i %></th>
-          <td><%= checklists[i - 1].dateAdded %></td>
+          <td><%= checklists[i - 1].dateAdded.toDateString() %></td>
           <td><%= checklists[i - 1].comment %></td>
           <td><%= checklists[i - 1].total %></td>
           <td>
