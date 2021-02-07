@@ -1,10 +1,11 @@
 <%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
 <body>
   <div class="container mt-3">
-    <a class="btn btn-lg btn-primary mb-1" href="/checklists/new" role="button"
-      >Add new</a
-    >
-    <h1>Previous entries</h1>
+    <div class="d-inline-flex">
+      <h1 class="flex-grow-1">Previous entries</h1>
+    </div>
+
     <table class="table">
       <thead class="thead-light">
         <tr>
@@ -45,6 +46,9 @@
         <% } %>
       </tbody>
     </table>
+    <a class="btn btn-lg btn-primary" href="/checklists/new" role="button"
+        >Add new</a
+      >
   </div>
   <%- include('../partials/footer') %>
 </body>
