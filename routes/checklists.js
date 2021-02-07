@@ -34,14 +34,9 @@ let questions = [
 // **********************************
 // INDEX - renders multiple checklists
 // **********************************
-router.get("/", (req, res) => {
-  Checklist.find({}, (err, checklists) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("checklists/index", { checklists });
-    }
-  });
+router.get("/", async (req, res) => {
+  const checklists = await Checklist.find({});
+  res.render("checklists/index", { checklists });
 });
 // **********************************
 // NEW - renders a form
@@ -52,7 +47,7 @@ router.get("/new", (req, res) => {
 // **********************************
 // CREATE - creates a new checklist
 // **********************************
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const {
     q1,
     q2,
@@ -116,23 +111,9 @@ router.post("/", (req, res) => {
   };
 
   newChecklist.total = numTotal(newChecklist.answers);
-
-  Checklist.create(newChecklist)
-    .then(() => {
-      Checklist.find({})
-        .then(() => {
-          res.redirect("/checklists");
-        })
-        .catch(() => {
-          res.send("IT WAS A FLUKE");
-        });
-
-      console.log(newChecklist);
-    })
-    .catch((err) => {
-      console.log(err._message);
-      res.send("IT WAS A FLUKE");
-    });
+  const createChecklist = new Checklist(newChecklist);
+  await createChecklist.save();  
+  res.redirect("/checklists");
 });
 
 // *******************************************
@@ -166,16 +147,16 @@ router.put("/:id", async (req, res) => {
     runValidators: true,
     new: true,
   });
-  
+
   res.redirect("/checklists");
 });
 
 // *******************************************
 // DELETE/DESTROY- removes a single comment
 // *******************************************
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  checklists = checklists.filter((c) => c.id !== id);
+  await Checklist.findByIdAndDelete(id);
   res.redirect("/checklists");
 });
 
