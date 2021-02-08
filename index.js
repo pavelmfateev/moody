@@ -1,3 +1,5 @@
+const checklist = require("./models/checklist.js");
+
 // SETUP
 const express = require("express"),
   app = express(),
@@ -5,8 +7,9 @@ const express = require("express"),
   path = require("path"),
   methodOverride = require("method-override"),
   checklistsRoutes = require("./routes/checklists.js"),
+  chartsRoutes = require("./routes/charts.js"),
   mongoose = require("mongoose"),
-  ejsMate = require('ejs-mate');
+  ejsMate = require("ejs-mate");
 
 mongoose.set("useFindAndModify", false);
 mongoose
@@ -30,13 +33,12 @@ app.use(express.json());
 // To 'fake' put/patch/delete requests:
 app.use(methodOverride("_method"));
 // Views folder and EJS setup:
-app.engine('ejs', ejsMate);
+app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 
-
-
-app.use('/checklists', checklistsRoutes);
+app.use("/checklists", checklistsRoutes);
+app.use("/charts", chartsRoutes);
 
 // ROUTES
 app.get("/", (req, res) => {
