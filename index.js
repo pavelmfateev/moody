@@ -26,6 +26,9 @@ mongoose
   });
 
 app.use(express.static(path.join(__dirname, "public")));
+app.get("/Chart.bundle.min.js", (req, res) => {
+  res.sendFile(__dirname + "/node_modules/chart.js/dist/Chart.bundle.min.js")
+});
 //To parse form data in POST request body:
 app.use(express.urlencoded({ extended: true }));
 // To parse incoming JSON in POST request body:
