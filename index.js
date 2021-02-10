@@ -1,4 +1,4 @@
-const checklist = require("./models/checklist.js");
+// const checklist = require("./models/checklist.js");
 
 // SETUP
 const express = require("express"),
@@ -16,14 +16,13 @@ mongoose
   .connect("mongodb://localhost:27017/depressionApp", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("CONNECTION OPEN");
-  })
-  .catch((err) => {
-    console.log("OH NO ERROR");
-    console.log(err);
   });
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+    console.log("Database connected");
+});
 
 app.use(express.static(path.join(__dirname, "public")));
 app.get("/Chart.bundle.min.js", (req, res) => {
