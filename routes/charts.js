@@ -9,20 +9,24 @@ const express = require("express"),
 // **********************************
 router.get("/", async (req, res) => {
   const checklists = await Checklist.find({});
-  const chartObj = {
+  const chartData = {
     data: []
   };
+
   
+  // console.log(chartObj.data.datasets[0]); 
   let i = 0;
   for(let property in checklists){
-    console.log(property);
-    // let formatted_date = moment(checklists)
-    // chartObj.data[i] = {
-    //   x: 
-    // };
+    let formatted_date = moment(checklists[property].dateAdded).format("YYYY-MM-DD");
+    
+    chartData.data[i] = {
+      x: formatted_date,
+      y: checklists[property].total
+    };
+    i++;
   }
-  // console.log(checklists[0]);
-  res.render("charts/index", { checklists });
+  // console.log(chartData);
+  res.render("charts/index", { chartData });
 });
 
 module.exports = router;

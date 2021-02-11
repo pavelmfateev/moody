@@ -1,29 +1,15 @@
 <% layout('layouts/boilerplate')%>
 <canvas id="myChart" width="400" height="200"></canvas>
-<script>
-  new Chart(document.getElementById("myChart"), {
+
+<script> 
+    var chartXy = <%- JSON.stringify(chartData) %>;
+    console.log(chartXy.data);
+    new Chart(document.getElementById("myChart"), {
     type: "line",
     data: {
       datasets: [
         {
-          data: [
-            {
-              x: "01/01/2021",
-              y: 10,
-            },
-            {
-              x: "01/08/2021",
-              y: 7,
-            },
-            {
-              x: "01/15/2021",
-              y: 25,
-            },
-            {
-              x: "01/19/2021",
-              y: 13,
-            },
-          ],
+          data: chartXy.data,
           fill: false,
           borderColor: 'rgba(76, 178, 178, 0.9)'
         },
@@ -45,7 +31,7 @@
           },
         ],
       },
-    },
+    }
   });
-
 </script>
+

@@ -23,7 +23,7 @@ const seedDB = async () => {
     for (let i = 0; i < 50; i++) {
         const random4 = () => {return Math.floor(Math.random() * 5)};
         const newChecklist = {
-            dateAdded: new Date(),
+            dateAdded: randomDate(new Date(2020, 0, 1), new Date()),
         answers: {},
         comment: "comment",
         total: 0,
@@ -41,6 +41,11 @@ const seedDB = async () => {
         await createCheck.save();
     }
 }
+
+
+function randomDate(start, end) {
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  }
 
 seedDB().then(() => {
     mongoose.connection.close();
