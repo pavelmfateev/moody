@@ -162,14 +162,14 @@ router.delete("/:id", async (req, res) => {
 
 // HELPER METHODS
 // calculates the total from response
-// const numTotal = (object) => {
-//   let total = 0;
-//   for (const property in object) {
-//     let numTemp = parseInt(object[property]);
-//     total += numTemp;
-//   }
-//   return total;
-// };
+const numTotal = (object) => {
+  let total = 0;
+  for (const property in object) {
+    let numTemp = parseInt(object[property]);
+    total += numTemp;
+  }
+  return total;
+};
 
 // fills object with answers from req.body
 const answers = (objIn) => {

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose"),
     Checklist = require("../models/checklist.js"),
-    numTotal = require("../routes/checklists");
+    numTotal = require("../routes/checklists"),
+    moment = require("moment");
 
 // Connect to database
 mongoose.set("useFindAndModify", false);
@@ -15,15 +16,22 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
     console.log("Database connected");
 });
-
+// let formatted_date = moment(checklists[property].dateAdded).format("YYYY-MM-DD");
 // create seeds
 const seedDB = async () => {
     await Checklist.deleteMany({});
+    let dateArr = [];
+    for(let i = 0; i< 50; i++){
+        dateArr[i] = randomDate(new Date(2020, 0, 1), new Date());    
+    }
+    dateArr.sort((a,b)=>a.getTime()-b.getTime());
 
+    // console.log(dateArr);
+    
     for (let i = 0; i < 50; i++) {
         const random4 = () => {return Math.floor(Math.random() * 5)};
         const newChecklist = {
-            dateAdded: randomDate(new Date(2020, 0, 1), new Date()),
+            dateAdded: dateArr[i],
         answers: {},
         comment: "comment",
         total: 0,
@@ -41,7 +49,6 @@ const seedDB = async () => {
         await createCheck.save();
     }
 }
-
 
 function randomDate(start, end) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
