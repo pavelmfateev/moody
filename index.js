@@ -47,6 +47,10 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+app.use((err, req, res, next) => {
+  res.send("Oh boy, something went wrong");
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

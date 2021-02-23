@@ -47,39 +47,9 @@ router.get("/new", (req, res) => {
 // **********************************
 // CREATE - creates a new checklist
 // **********************************
-router.post("/", async (req, res) => {
-  const {
-    q1,
-    q2,
-    q3,
-    q4,
-    q5,
-    q6,
-    q7,
-    q8,
-    q9,
-    q10,
-    q11,
-    q12,
-    q13,
-    q14,
-    q15,
-    q16,
-    q17,
-    q18,
-    q19,
-    q20,
-    q21,
-    q22,
-    q23,
-    q24,
-    q25,
-    comment,
-  } = req.body;
-
-  const newChecklist = {
-    dateAdded: new Date(),
-    answers: {
+router.post("/", async (req, res, next) => {
+  try {
+    const {
       q1,
       q2,
       q3,
@@ -105,15 +75,49 @@ router.post("/", async (req, res) => {
       q23,
       q24,
       q25,
-    },
-    comment,
-    total: 0,
-  };
+      comment,
+    } = req.body;
 
-  newChecklist.total = numTotal(newChecklist.answers);
-  const createChecklist = new Checklist(newChecklist);
-  await createChecklist.save();  
-  res.redirect("/checklists");
+    const newChecklist = {
+      dateAdded: new Date(),
+      answers: {
+        q1,
+        q2,
+        q3,
+        q4,
+        q5,
+        q6,
+        q7,
+        q8,
+        q9,
+        q10,
+        q11,
+        q12,
+        q13,
+        q14,
+        q15,
+        q16,
+        q17,
+        q18,
+        q19,
+        q20,
+        q21,
+        q22,
+        q23,
+        q24,
+        q25,
+      },
+      comment,
+      total: 0,
+    };
+
+    newChecklist.total = numTotal(newChecklist.answers);
+    const createChecklist = new Checklist(newChecklist);
+    await createChecklist.save();
+    res.redirect("/checklists");
+  } catch (e) {
+    next(e);
+  }
 });
 
 // *******************************************

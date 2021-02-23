@@ -1,6 +1,11 @@
 <% layout('layouts/boilerplate')%>
 <div class="container mb-5">
-  <form action="/checklists/<%= checklist.id %>?_method=PUT" method="POST">
+  <form
+    action="/checklists/<%= checklist.id %>?_method=PUT"
+    method="POST"
+    class="needs-validation"
+    novalidate
+  >
     <table class="table">
       <thead class="thead-light">
         <tr>
