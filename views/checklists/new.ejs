@@ -1,6 +1,21 @@
 <% layout('layouts/boilerplate')%>
-<div class="container mb-5">
-  <form action="/checklists" method="POST">
+<div class="container">
+  <div class="container bg-light p-4">
+    <h1>Instructions</h1>
+    <p class="lead mt-2">
+      Put a check to indicate how much you have experienced each symptom during
+      the past week, including today. <br />
+      Please answer all 25 items.
+    </p>
+    <ul class="list-inline mt-2">
+      <li class="list-inline-item text-muted">0 = not at all</li>
+      <li class="list-inline-item text-muted">1 = somewhat</li>
+      <li class="list-inline-item text-muted">2 = moderately</li>
+      <li class="list-inline-item text-muted">3 = a lot</li>
+      <li class="list-inline-item text-muted">4 = extremely</li>
+    </ul>
+  </div>
+  <form action="/checklists" method="POST" class="needs-validation" novalidate>
     <table class="table">
       <thead class="thead-light">
         <tr>
@@ -23,6 +38,7 @@
                   id="q<%=i%>_0"
                   name="q<%=i%>"
                   value="0"
+                  required
                 />
                 <label class="form-check-label" for="q1_0">0</label>
               </div>
@@ -33,6 +49,7 @@
                   id="<%=i%>_1"
                   name="q<%=i%>"
                   value="1"
+                  required
                 />
                 <label class="form-check-label" for="q<%=i%>_1">1</label>
               </div>
@@ -43,6 +60,7 @@
                   id="<%=i%>_2"
                   name="q<%=i%>"
                   value="2"
+                  required
                 />
                 <label class="form-check-label" for="q<%=i%>_2">2</label>
               </div>
@@ -53,6 +71,7 @@
                   id="<%=i%>_3"
                   name="q<%=i%>"
                   value="3"
+                  required
                 />
                 <label class="form-check-label" for="q<%=i%>_3">3</label>
               </div>
@@ -63,6 +82,7 @@
                   id="<%=i%>_4"
                   name="q<%=i%>"
                   value="4"
+                  required
                 />
                 <label class="form-check-label" for="q<%=i%>_4">4</label>
               </div>
@@ -79,6 +99,32 @@
       name="comment"
       placeholder="Add a comment"
     ></textarea>
-    <button class="btn btn-lg btn-primary mt-4" type="submit">Submit</button>
+    <button class="btn btn-lg btn-primary my-3" type="submit">Submit</button>
   </form>
 </div>
+
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    "use strict";
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll(".needs-validation");
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>

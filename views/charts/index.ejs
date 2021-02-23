@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate')%>
-<canvas id="myChart" width="400" height="200"></canvas>
+<canvas id="myChart" width="400" height="175"></canvas>
 
-<script> 
+<script>
     var chartXy = <%- JSON.stringify(chartData) %>;
     console.log(chartXy.data);
     new Chart(document.getElementById("myChart"), {
@@ -24,7 +24,7 @@
           {
             type: "time",
             time: {
-              unit: "month"
+              unit: "week",
             },
             distribution: "linear",
           },
@@ -33,4 +33,3 @@
     }
   });
 </script>
-
