@@ -1,5 +1,3 @@
-// const checklist = require("./models/checklist.js");
-
 // SETUP
 const express = require("express"),
   app = express(),
