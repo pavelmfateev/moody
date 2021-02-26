@@ -1,6 +1,6 @@
-const express = require("express");
-const router = express.Router();
-const Checklist = require("../models/checklist");
+const express = require("express"),
+  router = express.Router(),
+  Checklist = require("../models/checklist");
 
 // Question data (insert into database?)
 let questions = [

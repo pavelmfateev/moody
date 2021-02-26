@@ -6,25 +6,26 @@ const express = require("express"),
   methodOverride = require("method-override"),
   checklistsRoutes = require("./routes/checklists.js"),
   chartsRoutes = require("./routes/charts.js"),
+  ExpressError = require("./utils/ExpressError.js"),
+  catchAsync = require("./utils/catchAsync.js"),
   mongoose = require("mongoose"),
   ejsMate = require("ejs-mate");
 
 mongoose.set("useFindAndModify", false);
-mongoose
-  .connect("mongodb://localhost:27017/depressionApp", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+mongoose.connect("mongodb://localhost:27017/depressionApp", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
-    console.log("Database connected");
+  console.log("Database connected");
 });
 
 app.use(express.static(path.join(__dirname, "public")));
 app.get("/Chart.bundle.min.js", (req, res) => {
-  res.sendFile(__dirname + "/node_modules/chart.js/dist/Chart.bundle.min.js")
+  res.sendFile(__dirname + "/node_modules/chart.js/dist/Chart.bundle.min.js");
 });
 //To parse form data in POST request body:
 app.use(express.urlencoded({ extended: true }));
@@ -45,8 +46,14 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+app.all("*", (req, res, next) => {
+  next(new ExpressError("Page Not Found", 404));
+});
+
 app.use((err, req, res, next) => {
-  res.send("Oh boy, something went wrong");
+  const { statusCode = 500 } = err;
+  if (!err.message) err.message = "Oh no; something went wrong!";
+  res.status(statusCode).render("error", {err});
 });
 
 app.listen(port, () => {
